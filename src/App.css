@@ -1,15 +1,19 @@
 .board {
-  height: 606px;
-  width: 606px;
+  height: 600px;
+  width: 600px;
   padding: 50px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .square {
   height: 200px;
   width: 200px;
-  border: solid black 1px;
+  box-sizing: border-box;
+  border: 5px solid black;
   font-size: 30px;
+  display: flex;
+  align-self: center;
 }
