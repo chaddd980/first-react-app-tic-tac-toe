@@ -1,19 +1,58 @@
+.main-div {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  color: lightblue;
+}
+
+p {
+  display: inline;
+}
+
+.dummy {
+  margin-top: 75%;
+}
+
 .board {
-  height: 600px;
-  width: 600px;
+  height: 60%;
+  width: 60%;
   padding: 50px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 20px;
+  margin: 0 auto;
 }
 
 .square {
-  height: 200px;
-  width: 200px;
+  height: 33%;
+  width: 33%;
   box-sizing: border-box;
-  border: 5px solid black;
-  font-size: 30px;
+  border: 5px solid grey;
+  font-size: 70px;
   display: flex;
-  align-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:hover {
+  background-color: lightblue;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
 }
