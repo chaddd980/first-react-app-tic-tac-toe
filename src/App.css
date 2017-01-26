@@ -42,6 +42,7 @@ p {
   right: 0;
   padding-top: 12px;
   margin: 0 auto;
+  padding: 12px 0 0 0
 }
 
 .square {
@@ -49,7 +50,7 @@ p {
   width: 33%;
   box-sizing: border-box;
   border: 5px solid grey;
-  font-size: 7vw;
+  font-size: 6vw;
   display: flex;
   justify-content: center;
   align-items: center;
