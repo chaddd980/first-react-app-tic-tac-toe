@@ -11,7 +11,9 @@ class App extends Component {
         "", "", "", "", "", "", "", "", ""
       ],
       currentTurn: "",
-      game: "off"
+      game: "over",
+      clickedX: false,
+      clickedY: false
     }
   }
 
@@ -19,7 +21,10 @@ class App extends Component {
     this.setState({
       PLAYER_ONE_SYMBOL: "X",
       COMPUTER_SYMBOL: "Y",
-      currentTurn: "X"
+      currentTurn: "X",
+      clickedX: true,
+      clickedY: false,
+      game: "on"
     })
   }
 
@@ -27,8 +32,23 @@ class App extends Component {
     this.setState({
       PLAYER_ONE_SYMBOL: "Y",
       COMPUTER_SYMBOL: "X",
-      currentTurn: "Y"
+      currentTurn: "Y",
+      clickedY: true,
+      clickedX: false,
+      game: "on"
     })
+  }
+
+  XClass() {
+    if (this.state.clickedX === true && this.state.game !== "over") {
+      return true
+    }
+  }
+
+  YClass() {
+    if (this.state.clickedY === true && this.state.game !== "over") {
+      return true
+    }
   }
 
   handleClick(index) {
@@ -143,14 +163,7 @@ class App extends Component {
   render() {
     return (
       <div className="main-div">
-        <div className="header">
-          <h1>Tic Tac Toe</h1>
-          <h3>Choose X or Y</h3>
-          <button type="button" onClick={() => this.handleSelectionX()}>X</button><p>  OR  </p><button type="button" class="btn btn-primary" onClick={() => this.handleSelectionY()}>Y</button>
-        </div>
-        <div className="text-center">
-        <button type="button" className="reset" onClick={() => this.resetGame()}>Reset</button>
-        </div>
+        <Header handleX={this.handleSelectionX.bind(this)} handleY={this.handleSelectionY.bind(this)} changeClassX={this.XClass.bind(this)} changeClassY={this.YClass.bind(this)} reset={this.resetGame.bind(this)} />
         <div className="col-xs-12">
           <div className="dummy"></div>
           <div className="board">
@@ -161,6 +174,49 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+}
+
+class Header extends React.Component {
+  handleClickX() {
+    this.props.handleX()
+  }
+
+  handleClickY() {
+    this.props.handleY()
+  }
+
+  componentDidMount() {
+    this.classNameX()
+    this.classNameY()
+  }
+
+  classNameX() {
+    let className = ""
+    this.props.changeClassX() === true ? className = "selected" : className = ""
+    return className
+  }
+
+  classNameY() {
+    let className = ""
+    this.props.changeClassY() === true ? className = "selected" : className = ""
+    return className
+  }
+
+
+  render() {
+    return(
+      <div>
+        <div className="header">
+          <h1>Tic Tac Toe</h1>
+          <h3>Choose X or Y</h3>
+          <button type="button" className={this.classNameX()} onClick={() => this.handleClickX()}>X</button><p>  OR  </p><button type="button" className={this.classNameY()} onClick={() => this.handleClickY()}>Y</button>
+        </div>
+        <div className="text-center">
+          <button type="button" className="reset" onClick={() => this.props.reset()}>Reset</button>
+        </div>
+      </div>
+    )
   }
 }
 
