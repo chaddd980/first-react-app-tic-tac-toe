@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   handleClick(index) {
-    if (this.state.board[index] === "" && this.state.PLAYER_ONE_SYMBOL !== "") {
+    if (this.state.board[index] === "" && this.state.PLAYER_ONE_SYMBOL !== "" && this.state.PLAYER_ONE_SYMBOL === this.state.currentTurn) {
       let currentBoard = this.state.board
       currentBoard.splice(index, 1, this.state.currentTurn)
       this.setState({
