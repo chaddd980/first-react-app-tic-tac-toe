@@ -9,6 +9,12 @@
   color: lightblue;
 }
 
+.reset {
+  margin-top: 8px;
+  color: red;
+  font-weight: 600;
+}
+
 p {
   display: inline;
 }
@@ -30,7 +36,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  padding-top: 20px;
+  padding-top: 12px;
   margin: 0 auto;
 }
 

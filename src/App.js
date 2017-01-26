@@ -44,6 +44,30 @@ class App extends Component {
     }
   }
 
+  checkTie() {
+    let count = 0
+    this.state.board.map(function(cell,index){
+      if (cell === "") {
+        count += 1
+      }
+      return true
+    })
+    if (count === 0) {
+      return true
+    }
+  }
+
+  resetGame() {
+    this.setState({
+      game: "over",
+      board: [
+        "", "", "", "", "", "", "", "", ""
+      ],
+      PLAYER_ONE_SYMBOL: "",
+      COMPUTER_SYMBOL: "",
+      currentTurn: ""
+    })
+  }
 
   updateBoard() {
     var count = 0
@@ -65,33 +89,20 @@ class App extends Component {
   }
 
   checkPlayer() {
+    let winCount = 0
     var combos = [[0,1,2], [0,3,6], [0,4,8], [1,4,7], [2,5,8], [2,4,6], [3,4,5], [6,7,8]]
     combos.find(function(combo) {
       if(this.state.board[combo[0]] !== "" && this.state.board[combo[0]] === this.state.board[combo[1]] && this.state.board[combo[1]] === this.state.board[combo[2]]) {
         alert("Player Wins!!!")
-        this.setState({
-          game: "over",
-          board: [
-            "", "", "", "", "", "", "", "", ""
-          ],
-          PLAYER_ONE_SYMBOL: "",
-          COMPUTER_SYMBOL: "",
-          currentTurn: ""
-        })
+        winCount += 1
+        this.resetGame()
         return this.state.board[combo[0]]
-      } else if (this.checkTie()) {
-        alert("Game is Tied!!!")
-        this.setState({
-          game: "over",
-          board: [
-            "", "", "", "", "", "", "", "", ""
-          ],
-          PLAYER_ONE_SYMBOL: "",
-          COMPUTER_SYMBOL: "",
-          currentTurn: ""
-        })
       }
     }.bind(this))
+    if (this.checkTie() && winCount === 0) {
+      alert("Game is Tied!!!")
+      this.resetGame()
+    }
     if (this.state.game !== "over") {
       this.setState({
         currentTurn: this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.COMPUTER_SYMBOL : this.state.PLAYER_ONE_SYMBOL
@@ -100,62 +111,21 @@ class App extends Component {
       })
     }
   }
-// use a variable like count in the checkplayer method. then in the else if check for checkTie and if count is 0
-  checkTie() {
-    let count = 0
-    this.state.board.map(function(cell,index){
-      if (cell === "") {
-        count += 1
-      }
-      return true
-    })
-    if (count === 0) {
-      return true
-    }
-  }
-
-  // componentWillMount() {
-  //   if (this.state.game === "on") {
-  //     var count = 0
-  //     this.state.board.map(function(cell,index){
-  //       if (cell === "") {
-  //         count += 1
-  //       }
-  //       return true
-  //     })
-  //     if (count === 0) {
-  //       alert("Game is Tied!!!")
-  //       this.setState({
-  //         game: "over",
-  //         board: [
-  //           "", "", "", "", "", "", "", "", ""
-  //         ],
-  //         PLAYER_ONE_SYMBOL: "",
-  //         COMPUTER_SYMBOL: "",
-  //         currentTurn: ""
-  //       })
-  //     }
-  //   }
-  // }
 
   checkComputer() {
+    let winCount = 0
     var combos = [[0,1,2], [0,3,6], [0,4,8], [1,4,7], [2,5,8], [2,4,6], [3,4,5], [6,7,8]]
     combos.find(function(combo) {
-      debugger
       if(this.state.board[combo[0]] !== "" && this.state.board[combo[0]] === this.state.board[combo[1]] && this.state.board[combo[1]] === this.state.board[combo[2]]) {
         alert("Computer Wins!!!")
-        this.setState({
-          game: "over",
-          board: [
-            "", "", "", "", "", "", "", "", ""
-          ],
-          PLAYER_ONE_SYMBOL: "",
-          COMPUTER_SYMBOL: "",
-          currentTurn: ""
-        })
+        this.resetGame()
         return this.state.board[combo[0]]
       }
     }.bind(this))
+    if (this.checkTie() && winCount === 0) {
+      alert("Game is Tied!!!")
+      this.resetGame()
+    }
     if (this.state.game !== "over") {
       this.setState({
         currentTurn: this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.COMPUTER_SYMBOL : this.state.PLAYER_ONE_SYMBOL
@@ -176,7 +146,10 @@ class App extends Component {
         <div className="header">
           <h1>Tic Tac Toe</h1>
           <h3>Choose X or Y</h3>
-          <button type="button" class="btn btn-primary" onClick={() => this.handleSelectionX()}>X</button><p>  OR  </p><button type="button" class="btn btn-primary" onClick={() => this.handleSelectionY()}>Y</button>
+          <button type="button" onClick={() => this.handleSelectionX()}>X</button><p>  OR  </p><button type="button" class="btn btn-primary" onClick={() => this.handleSelectionY()}>Y</button>
+        </div>
+        <div className="text-center">
+        <button type="button" className="reset" onClick={() => this.resetGame()}>Reset</button>
         </div>
         <div className="col-xs-12">
           <div className="dummy"></div>
